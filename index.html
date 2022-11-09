@@ -120,7 +120,7 @@ body{
     <script>
 
         const items = document.querySelectorAll(".item");
-        const block = document.querySelectorAll(".ddd");
+        const b = document.querySelectorAll(".ddd");
         let dragEl = null;
         let dropEl = null;
         items.forEach(i => {
@@ -147,7 +147,7 @@ body{
             })
         });        
         
-        block.forEach(b =>{
+        b.forEach(b =>{
             b.addEventListener("dragover", e => {
                 e.stopPropagation();
                 e.preventDefault();
@@ -167,14 +167,14 @@ body{
         
         
             b.addEventListener("drop", function(el) {
-                el.preventDefault();
                 el.stopPropagation();
+                el.preventDefault();
                 if (dropEl === this) {
                     this.appendChild(dragEl);
                 } else {
-                    this.insertBefore(dragEl, dropEl.nextElementSibling);
                     dropEl.classList.remove("dragOver");
                     dropEl = null;
+                    this.insertBefore(dragEl, dropEl.previousElementSibling);
                 }
             });
         

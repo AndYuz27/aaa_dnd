@@ -171,10 +171,6 @@ body{
                 el.preventDefault();
                 if (dropEl === this) {
                     this.appendChild(dragEl);
-                } else {
-                    dropEl.classList.remove("dragOver");
-                    dropEl = null;
-                    this.insertBefore(dragEl, dropEl.previousElementSibling);
                 }
             });
         

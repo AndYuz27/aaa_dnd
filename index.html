@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DnD</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<style>
+    @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@600&display=swap");
+
+
+body{
+    font-family: "Nunito", sans-serif;
+    background: #222;
+}
+.container{
+    width: 100%;
+    display: flex;
+}
+.ddd {
+    width: 650px;
+    padding: 20px;
+    display: grid;
+    gap: 20px;
+    height: 800px;
+    align-content: flex-start;
+    text-align: center;
+    margin: 30px;
+    border-radius: 8px;
+}
+.dddn{
+    background-color: purple;
+    border-radius: 8px;
+    color: white;
+    height: 32px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+}
+.dddn2{
+    background-color: orange;
+    border-radius: 8px;
+    color: white;
+    height: 32px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.dddn3{
+    background-color: red;
+    border-radius: 8px;
+    color: white;
+    height: 32px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    
+}
+.dddn4{
+    background-color: #5cc06e;
+    border-radius: 8px;
+    color: white;
+    height: 32px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    
+}
+.item {
+    height: 100px;
+    background-color: #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    position: relative;
+    cursor: move;
+    user-select: none;
+}
+.dragOver {
+    margin-bottom: 70px;
+    position: relative;
+    transition: margin-bottom .5s linear;
+}
+
+</style>
+<body>
+    <div class="container">
+        <div class="ddd">
+            <div class="dddn">учеба</div>
+            <div class="item" title="1">Подготовить проект по Angular</div>
+            <div class="item" title="2">Сдать все КТ</div>
+            <div class="item" title="3">Хочу Пиццы</div>
+            <div class="item" title="4">Поменять провайдера</div>
+            <div class="item" title="5">Дизайн</div>
+        </div>
+        <div class="ddd">
+            <div class="dddn2">дом. дела</div>
+            <div class="item" title="1">Поменять обои</div>
+            <div class="item" title="2">выкинуть всякий хлам на столе</div>
+            <div class="item" title="3">Сделать КТ по HTML CSS</div>
+        </div>
+        <div class="ddd">
+            <div class="dddn3">чушь</div>
+            <div class="item" title="1">Очистить диск от видосов с Тик Тока</div>
+            <div class="item" title="2">Глянуть по телеку футбол</div>
+        </div>
+        <div class="ddd">
+            <div class="dddn4">на потом</div>
+            <div class="item" title="1">снять деньги с банкомата</div>
+            <div class="item" title="2">Сдеалть задание от Гроо</div>
+        </div>
+    </div>
+
+    <script>
+
+        const items = document.querySelectorAll(".item");
+        const block = document.querySelectorAll(".ddd");
+        let dragEl = null;
+        let dropEl = null;
+        items.forEach(i => {
+            i.draggable = true;
+            i.addEventListener("dragstart", e => {
+                dragEl = e.target;
+                e.target.classList.add("isDragging");
+            });
+            i.addEventListener("dragend", e => {
+                setTimeout(function() {
+                    e.target.classList.remove("isDragging");
+                    dragEl = null;
+                }, 150)
+        
+            });
+            i.addEventListener("dragover", e => {
+                e.preventDefault();
+                dropEl = e.target;
+                e.target.classList.add("dragOver");
+            })
+            i.addEventListener("dragleave", e => {
+                e.preventDefault();
+                e.target.classList.remove("dragOver");
+            })
+        });        
+        
+        block.forEach(b =>{
+            b.addEventListener("dragover", e => {
+                e.stopPropagation();
+                e.preventDefault();
+                })
+            
+                b.addEventListener("dragleave", e => {
+                e.stopPropagation();
+                e.preventDefault();
+                b.style = null;   
+                });
+            b.addEventListener("dragover", e => {
+                e.preventDefault();
+                dropEl = e.target;
+                e.target.classList.add("dragOver");
+            })
+        
+        
+        
+            b.addEventListener("drop", function(el) {
+                el.preventDefault();
+                el.stopPropagation();
+                if (dropEl === this) {
+                    this.appendChild(dragEl);
+                } else {
+                    this.insertBefore(dragEl, dropEl.nextElementSibling);
+                    dropEl.classList.remove("dragOver");
+                    dropEl = null;
+                }
+            });
+        
+        })
+        </script>
+</body>
+</html>
